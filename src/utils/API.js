@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 const search = (query) =>
-  axios.get(`https://api.giphy.com/v1/gifs/search?q=${query}$&api_key=zGTBO65XtIkTWFiBcgVCxJX7x8FveHfA&limit=20`);
+  axios.get(`https://newsapi.org/v2/everything?q=apple&from=2024-11-26&to=2024-11-26&sortBy=popularity&apiKey=76acae67181d47ca93388145e8c95b85`);
 
 export default search;

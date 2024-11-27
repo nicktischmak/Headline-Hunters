@@ -1,4 +1,9 @@
 import { useState, useEffect } from 'react';
 
-// Import our search method
-import search from '../utils/API';
+import search from '../utils/API'; 
+
+const Container = () => {
+  const [results, setResults] = useState([]);
+}
+
+export default Container;
