@@ -8,3 +8,5 @@ function CardCenter(props) {
     </div>
   );
 }
+
+export default CardCenter;
