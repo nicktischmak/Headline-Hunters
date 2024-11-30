@@ -3,7 +3,7 @@ import ContainerUI from './UI/ContainerUI';
 import Row from './UI/Row';
 import CardCenter from './UI/CardCenter';
 import SearchForm from './SearchForm';
-import search from '../utils/API'; 
+import API from '../utils/API'; 
 
 const Container = () => {
   // setting state for search results/query
@@ -12,7 +12,7 @@ const Container = () => {
 
   // using API search method to search category/keyword
   const searchNews = (query) => 
-    search(query)
+    API.search(query)
       .then((res) => {
         setResults(res.data);
         setSearch('');
