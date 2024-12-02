@@ -11,17 +11,18 @@ const Container = () => {
   const [search, setSearch] = useState('');
 
   // using API search method to search category/keyword
-  const searchNews = (query) => 
+  const searchNews = (query) => {
     API.search(query)
       .then((res) => {
-        setResults(res.data);
-        setSearch('');
+        // Assuming res.data is the correct path to your data
+        setResults(res.articles || []);
+        
       })
       .catch((err) => console.log(err));
-
+  };
       // using API method to render default search result
       useEffect(() => {
-        searchNews('politics');
+        searchNews('football');
       }, []);
 
       // handle input changes to search form
@@ -48,12 +49,15 @@ const Container = () => {
           <Row>
             <CardCenter heading={title || 'Search for a News Article'}>
               {title ? (
-                <NewsDetail
-                  title={title}
-                  author={author}
-                  description={description}
-                  url={url}
-                />
+            results.map((article, index) => (
+              <NewsDetail
+                key={index}
+                title={article.title}
+                author={article.author}
+                description={article.description}
+                url={article.url}
+              />
+            ))
               ) : (
                 <h3>No Results to Display</h3>
               )}
