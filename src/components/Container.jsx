@@ -3,52 +3,47 @@ import ContainerUI from './UI/ContainerUI';
 import Row from './UI/Row';
 import CardCenter from './UI/CardCenter';
 import SearchForm from './SearchForm';
-import API from '../utils/API'; 
+import API from '../utils/API';
+import NewsDetail from './NewsDetail';
 
 const Container = () => {
-  // setting state for search results/query
   const [results, setResults] = useState([]);
   const [search, setSearch] = useState('');
 
-  // using API search method to search category/keyword
   const searchNews = (query) => {
     API.search(query)
       .then((res) => {
-        // Assuming res.data is the correct path to your data
         setResults(res.articles || []);
-        
+        setSearch('');
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
-      // using API method to render default search result
-      useEffect(() => {
-        searchNews('football');
-      }, []);
 
-      // handle input changes to search form
-      const handleInputChange = (e) => setSearch(e.target.value);
+  useEffect(() => {
+    searchNews('football');
+  }, []);
 
-      // handle form submission
-      const handleFormSubmit = (e) => {
-        e.preventDefault();
-        searchNews(search);
-      };
+  const handleInputChange = (e) => setSearch(e.target.value);
 
-      // destructure result object to make code more readable
-      const {
-        title = '',
-        author = '',
-        description = '',
-        url = '',
-      } = results;
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    if (search.trim()) {
+      searchNews(search);
+    }
+  };
 
-      // fallback to default header if title is undefined
-
-      return (
-        <ContainerUI>
-          <Row>
-            <CardCenter heading={title || 'Search for a News Article'}>
-              {title ? (
+  return (
+    <ContainerUI>
+      <Row>
+        <CardCenter heading="Search for News Articles">
+        <SearchForm
+            handleInputChange={handleInputChange}
+            handleFormSubmit={handleFormSubmit}
+            value={search}
+          />
+        </CardCenter>
+        <CardCenter>
+          {results.length > 0 ? (
             results.map((article, index) => (
               <NewsDetail
                 key={index}
@@ -58,20 +53,13 @@ const Container = () => {
                 url={article.url}
               />
             ))
-              ) : (
-                <h3>No Results to Display</h3>
-              )}
-            </CardCenter>
-            <CardCenter>
-              <SearchForm
-                handleInputChange={handleInputChange}
-                handleFormSubmit={handleFormSubmit}
-                results={results}
-              />
-            </CardCenter>
-          </Row>
-        </ContainerUI>
-      );
-}
+          ) : (
+            <h3>No Results to Display</h3>
+          )}
+        </CardCenter>
+      </Row>
+    </ContainerUI>
+  );
+};
 
 export default Container;
