@@ -1,18 +1,9 @@
-// server.js
-const express = require('express');
-const path = require('path');
-const app = express();
-
-// Middleware to serve static files
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Example route
-app.get('/api/news', (req, res) => {
-  res.json({ message: 'Welcome to Headline Hunters!' });
-});
-
-// Port binding
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+const express = require('express')
+const app = express()
+const port = process.env.PORT || 4000;
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
